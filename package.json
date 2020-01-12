@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/BengBu-YueZhang/gamersky-crawler#readme",
   "dependencies": {
+    "mongoose": "^5.8.7",
     "puppeteer": "^2.0.0"
   }
 }
