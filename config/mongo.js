@@ -6,7 +6,7 @@ const config = {
         mongoUrl: 'mongodb://localhost/gamenews'
     },
     production: {
-        mongoUrl: ``
+        mongoUrl: `mongodb://admin:admin@127.0.0.1:27017/gamenews`
     }
 }
 const mongoUrl = config[mode].mongoUrl
