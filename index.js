@@ -5,15 +5,25 @@ const crawlerGamersky = require('./gamersky')
 const crawlerGameSpot = require('./gamespot')
 const crawlerIGN = require('./ign')
 const schedule = require('node-schedule')
-const mode = process.env.mode
-const dataPath = mode === 'develop' ? path.resolve(__dirname, './data') : '/var/www/crawlerData'
 
-const asyncMkdir = promisify(fs.mkdir)
+const mode = process.env.mode
+let dataDirPath = mode === 'develop' ? path.resolve(__dirname, './data') : '/var/www/crawlerData'
+const mkdir = promisify(fs.mkdir)
 
 const existsDir = async () => {
-    if (!fs.existsSync(dataPath)) {
-        await asyncMkdir(dataPath)
+    if (!fs.existsSync(dataDirPath)) {
+        await mkdir(dataDirPath)
     }
+}
+
+const existsFile = async () => {
+    const date = new Date()
+    const filename = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-${date.getHours()}.js`
+    const filePath = path.join(dataDirPath, filename)
+    if (!fs.existsSync(filePath)) {
+        fs.writeFileSync(filePath, '')
+    }
+    return filePath
 }
 
 const crawler = async () => {
@@ -22,15 +32,24 @@ const crawler = async () => {
         crawlerGameSpot(),
         crawlerIGN()
     ])
-    const news = [...a, ...b, ...c]
+    return [...a, ...b, ...c]
 }
 
-const writeData = () => {
+const writeData = async (data = []) => {
+    const filePath = await existsFile()
+    const writeStream = fs.createWriteStream(filePath)
+    // jsonp
+    writeStream.write(`handleNewsList(${JSON.stringify(data)})`)
+    writeStream.end()
+    writeStream.on('finish', () => {
+        console.error('写入已完成')
+    })
 }
 
 schedule.scheduleJob('50 * * * *', async () => {
     try {
         await existsDir()
+        await existsFile()
         await crawler()
         writeData()
     } catch (error) {
