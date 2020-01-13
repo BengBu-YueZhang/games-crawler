@@ -6,11 +6,24 @@ const config = {
         mongoUrl: 'mongodb://localhost/gamenews'
     },
     production: {
+        // https://stackoverflow.com/questions/16124255/how-to-connect-with-username-password-to-mongodb-using-native-node-js-driver
         mongoUrl: `mongodb://game:game@127.0.0.1:27017/gamenews`
     }
 }
 const mongoUrl = config[mode].mongoUrl
 
+// db.createUser(
+//     {
+//         user: "game",
+//         pwd: "game",
+//         roles:[
+//             {
+//                 role: "readWrite",
+//                 db: "gamenews"
+//             }
+//         ]
+//     }
+// )
 module.exports = {
     mongoConnect () {
         mongoose.connect(mongoUrl, {
