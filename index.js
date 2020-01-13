@@ -1,14 +1,27 @@
 const path = require('path')
 const fs = require('fs')
+const schedule = require('node-schedule')
 const { promisify } = require('util')
+const NewsListModel = require('./model')
 const crawlerGamersky = require('./gamersky')
 const crawlerGameSpot = require('./gamespot')
 const crawlerIGN = require('./ign')
-const schedule = require('node-schedule')
+const { mongoConnect } = require('./config/mongo')
 
 const mode = process.env.mode
 let dataDirPath = mode === 'develop' ? path.resolve(__dirname, './data') : '/var/www/crawlerData'
 const mkdir = promisify(fs.mkdir)
+
+const saveNewsList = async (data = []) => {
+    try {
+        const newsList = new NewsListModel({
+            list: data
+        })
+        await newsList.save()
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 const existsDir = async () => {
     if (!fs.existsSync(dataDirPath)) {
@@ -47,13 +60,28 @@ const writeData = async (data = []) => {
 }
 
 // XX:50 (7:50, 20:50, 21:50) run
-schedule.scheduleJob('50 * * * *', async () => {
+// schedule.scheduleJob('50 * * * *', async () => {
+//     try {
+//         await existsDir()
+//         const news = await crawler()
+//         await saveNewsList(news)
+//         writeData(news)
+//     } catch (error) {
+//         console.log(error)
+//     }
+// })
+
+const test = async () => {
     try {
         await existsDir()
-        await existsFile()
-        await crawler()
-        writeData()
+        const news = await crawler()
+        await saveNewsList(news)
+        writeData(news)
     } catch (error) {
         console.log(error)
     }
-})
+}
+
+mongoConnect()
+
+test()
