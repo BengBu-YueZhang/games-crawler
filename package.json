@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "ign": "echo \"Error: no test specified\" && exit 1",
-    "gamespot": "",
-    "gamersky": ""
+    "start": "mode=develop nodemon index.js",
+    "prev": "mode=production node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +19,7 @@
   "homepage": "https://github.com/BengBu-YueZhang/gamersky-crawler#readme",
   "dependencies": {
     "mongoose": "^5.8.7",
+    "node-schedule": "^1.3.2",
     "puppeteer": "^2.0.0"
   }
 }
