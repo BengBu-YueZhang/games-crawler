@@ -2,7 +2,9 @@ const puppeteer = require('puppeteer')
 
 const getGamerskyNews = async (page) => {
     try {
+        console.log('准备开始爬取游民')
         await page.goto('https://www.gamersky.com/')
+        console.log('开始爬取游民')
         const nav = await page.$(`.Mid1Mnav a`)
         const { x, y, width, height } = await nav.boundingBox()
         await page.mouse.move(x + width / 2, y + height / 2)

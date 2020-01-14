@@ -9,9 +9,7 @@ const crawlerIGN = require('./ign')
 const { mongoConnect } = require('./config/mongo')
 
 const mode = process.env.mode
-// let dataDirPath = mode === 'develop' ? path.resolve(__dirname, './data') : '/var/www/crawlerData'
-console.log(`mode`, mode)
-let dataDirPath = '/var/www/crawlerData'
+let dataDirPath = mode === 'develop' ? path.resolve(__dirname, './data') : '/var/www/crawlerData'
 const mkdir = promisify(fs.mkdir)
 
 const saveNewsList = async (data = []) => {
@@ -26,8 +24,12 @@ const saveNewsList = async (data = []) => {
 }
 
 const existsDir = async () => {
-    if (!fs.existsSync(dataDirPath)) {
-        await mkdir(dataDirPath)
+    try {
+        if (!fs.existsSync(dataDirPath)) {
+            await mkdir(dataDirPath)
+        } 
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -42,24 +44,32 @@ const existsFile = async () => {
 }
 
 const crawler = async () => {
-    console.log('开始爬取')
-    const [a, b, c] = await Promise.all([
-        crawlerGamersky(),
-        crawlerGameSpot(),
-        crawlerIGN()
-    ])
-    return [...a, ...b, ...c]
+    try {
+        console.log('开始爬取')
+        const [a, b, c] = await Promise.all([
+            crawlerGamersky(),
+            crawlerGameSpot(),
+            crawlerIGN()
+        ])
+        return [...a, ...b, ...c] 
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const writeData = async (data = []) => {
-    const filePath = await existsFile()
-    const writeStream = fs.createWriteStream(filePath)
-    // jsonp
-    writeStream.write(`handleNewsList(${JSON.stringify(data)})`)
-    writeStream.end()
-    writeStream.on('finish', () => {
-        console.error('写入已完成')
-    })
+    try {
+        const filePath = await existsFile()
+        const writeStream = fs.createWriteStream(filePath)
+        // jsonp
+        writeStream.write(`handleNewsList(${JSON.stringify(data)})`)
+        writeStream.end()
+        writeStream.on('finish', () => {
+            console.error('写入已完成')
+        }) 
+    } catch (error) {
+       console.log(error) 
+    }
 }
 
 // XX:50 (7:40, 20:40, 21:40) run
@@ -85,6 +95,6 @@ const temp = async () => {
     }
 }
 
-mongoConnect()
+// mongoConnect()
 
 temp()

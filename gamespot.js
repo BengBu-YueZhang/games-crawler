@@ -2,9 +2,11 @@ const puppeteer = require('puppeteer')
 
 const getGameSpotNews = async (page) => {
     try {
+        console.log('准备爬取gamespot')
         await page.goto('https://www.gamespot.com/', {
             timeout: 45000
         })
+        console.log('开始爬取gamespot')
         const popular = await page.$(`#river > dl > dd > div > a.pod-header__filters-item.js-filter-option`)
         await popular.click()
         const as = await page.$$eval(`#river > div > section a`, els => {

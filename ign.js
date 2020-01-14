@@ -2,7 +2,9 @@ const puppeteer = require('puppeteer')
 
 const getIGNNews = async (page) => {
     try {
+        console.log('准备爬取ign')
         await page.goto('http://www.ign.xn--fiqs8s/')
+        console.log('开始爬取ign')
         return await page.$$eval(`.article.NEWS .m h3 a`, els => {
             return els.map(el => ({ src: el.href, title: el.innerText, source: 'IGN' }))
         })
