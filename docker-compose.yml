@@ -9,8 +9,13 @@ services:
     volumes:
       - '/var/www/crawlerData:/var/www/crawlerData'
   crawlerDb:
-    image: mongo
+    image: 'mongo'
+    container_name: 'games_crawler_db'
     restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=gamenews
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root123
     ports:
       - '27010:27017'
     command:
@@ -20,3 +25,4 @@ services:
     volumes:
       - '/etc/mongod.conf:/etc/mongod.conf'
       - '/var/lib/mongodb:/var/lib/mongodb'
+      - './init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro'
