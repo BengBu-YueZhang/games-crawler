@@ -8,15 +8,15 @@ services:
       - "8666"
     volumes:
       - '/var/www/crawlerData:/var/www/crawlerData'
-  db:
-    image: mongo
-    restart: always
-    ports:
-      - '27010:27017'
-    command:
-      - '--auth'
-      - '-f'
-      - '/etc/mongod.conf'
-    volumes:
-      - '/etc/mongod.conf:/etc/mongod.conf'
-      - '/var/lib/mongodb:/var/lib/mongodb'
+  # db:
+  #   image: mongo
+  #   restart: always
+  #   ports:
+  #     - '27010:27017'
+  #   command:
+  #     - '--auth'
+  #     - '-f'
+  #     - '/etc/mongod.conf'
+  #   volumes:
+  #     - '/etc/mongod.conf:/etc/mongod.conf'
+  #     - '/var/lib/mongodb:/var/lib/mongodb'
