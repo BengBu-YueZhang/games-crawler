@@ -59,7 +59,7 @@ const writeData = async (data = []) => {
     })
 }
 
-// XX:50 (7:50, 20:50, 21:50) run
+// XX:50 (7:40, 20:40, 21:40) run
 schedule.scheduleJob('40 * * * *', async () => {
     try {
         await existsDir()
