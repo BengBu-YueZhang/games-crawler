@@ -60,18 +60,7 @@ const writeData = async (data = []) => {
 }
 
 // XX:50 (7:50, 20:50, 21:50) run
-// schedule.scheduleJob('50 * * * *', async () => {
-//     try {
-//         await existsDir()
-//         const news = await crawler()
-//         await saveNewsList(news)
-//         writeData(news)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })
-
-const test = async () => {
+schedule.scheduleJob('50 * * * *', async () => {
     try {
         await existsDir()
         const news = await crawler()
@@ -80,8 +69,6 @@ const test = async () => {
     } catch (error) {
         console.log(error)
     }
-}
+})
 
 mongoConnect()
-
-test()
