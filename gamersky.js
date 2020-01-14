@@ -17,7 +17,10 @@ const getGamerskyNews = async (page) => {
 const crawlerGamersky = async () => {
     let browser = null
     try {
-        browser = await puppeteer.launch()
+        browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox']
+        })
         const page = await browser.newPage()
         return await getGamerskyNews(page)
     } catch (error) {  

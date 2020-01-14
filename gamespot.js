@@ -23,7 +23,10 @@ const getGameSpotNews = async (page) => {
 const crawlerGameSpot = async () => {
     let browser = null
     try {
-        browser = await puppeteer.launch()
+        browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox']
+        })
         const page = await browser.newPage()
         return await getGameSpotNews(page)
     } catch (error) {  
