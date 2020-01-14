@@ -9,7 +9,9 @@ const crawlerIGN = require('./ign')
 const { mongoConnect } = require('./config/mongo')
 
 const mode = process.env.mode
-let dataDirPath = mode === 'develop' ? path.resolve(__dirname, './data') : '/var/www/crawlerData'
+// let dataDirPath = mode === 'develop' ? path.resolve(__dirname, './data') : '/var/www/crawlerData'
+console.log(`mode`, mode)
+let dataDirPath = '/var/www/crawlerData'
 const mkdir = promisify(fs.mkdir)
 
 const saveNewsList = async (data = []) => {
@@ -40,6 +42,7 @@ const existsFile = async () => {
 }
 
 const crawler = async () => {
+    console.log('开始爬取')
     const [a, b, c] = await Promise.all([
         crawlerGamersky(),
         crawlerGameSpot(),
