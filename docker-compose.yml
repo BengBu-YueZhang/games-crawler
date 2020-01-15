@@ -21,6 +21,8 @@ services:
       - '27010:27017'
     command:
       - '--auth'
+      - '-f'
+      - '/etc/mongod.conf.orig'
     volumes:
       - '/var/www/crawlerdb:/var/lib/mongodb'
       - '/var/www/crawlerdbLog/mongod.log:/var/log/mongodb/mongod.log'
