@@ -7,7 +7,7 @@ const config = {
     },
     production: {
         // https://stackoverflow.com/questions/16124255/how-to-connect-with-username-password-to-mongodb-using-native-node-js-driver
-        mongoUrl: `mongodb://game:game@127.0.0.1:27010/gamenews`
+        mongoUrl: `mongodb://game:game@crawlerDb:27017/gamenews`
     }
 }
 const mongoUrl = config[mode].mongoUrl

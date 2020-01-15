@@ -77,7 +77,7 @@ schedule.scheduleJob('10 * * * *', async () => {
     try {
         await existsDir()
         const news = await crawler()
-        // await saveNewsList(news)
+        await saveNewsList(news)
         writeData(news)
     } catch (error) {
         console.log(error)
@@ -85,4 +85,4 @@ schedule.scheduleJob('10 * * * *', async () => {
 })
 
 
-// mongoConnect()
+mongoConnect()
