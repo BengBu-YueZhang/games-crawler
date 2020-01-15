@@ -6,7 +6,7 @@ services:
     build: /var/www/crawler
     restart: always
     expose:
-      - "8666"
+      - "8666:8666"
     volumes:
       - '/var/www/crawlerData:/var/www/crawlerData'
   crawlerDb:
