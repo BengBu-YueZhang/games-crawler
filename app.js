@@ -73,7 +73,7 @@ const writeData = async (data = []) => {
 }
 
 // XX:50 (7:40, 20:40, 21:40) run
-schedule.scheduleJob('52 * * * *', async () => {
+schedule.scheduleJob('10 * * * *', async () => {
     try {
         await existsDir()
         const news = await crawler()
