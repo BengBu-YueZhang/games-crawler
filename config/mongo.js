@@ -7,6 +7,8 @@ const config = {
     },
     production: {
         // https://stackoverflow.com/questions/16124255/how-to-connect-with-username-password-to-mongodb-using-native-node-js-driver
+        // https://stackoverflow.com/questions/47648792/communicating-between-different-docker-services-in-docker-compose
+        // https://stackoverflow.com/questions/49417860/docker-compose-cross-containers-communication
         mongoUrl: `mongodb://game:game@games_crawler_db:27017/gamenews`
     }
 }
