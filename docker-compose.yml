@@ -5,7 +5,7 @@ services:
     container_name: games_crawler
     build: /var/www/crawler
     restart: always
-    expose:
+    ports:
       - "8666:8666"
     volumes:
       - '/var/www/crawlerData:/var/www/crawlerData'
