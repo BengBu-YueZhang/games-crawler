@@ -13,17 +13,19 @@ services:
     image: 'mongo'
     container_name: 'games_crawler_db'
     restart: always
+    # use admin
+    # db.auth("admin", passwordPrompt())
     environment:
       - MONGO_INITDB_DATABASE=gamenews
       - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root123
+      - MONGO_INITDB_ROOT_PASSWORD=root
     ports:
       - '27010:27017'
     command:
       - '--auth'
-      - '-f'
-      - '/etc/mongod.conf.orig'
+    # https://stackoverflow.com/questions/34390220/how-to-mount-external-volume-for-mongodb-using-docker-compose-and-docker-machine
     volumes:
-      - '/var/www/crawlerdb:/var/lib/mongodb'
+      - '/var/www/crawlerdb:/data/db'
+      - '/var/www/crawlerdb2:/var/lib/mongodb'
       - '/var/www/crawlerdbLog/mongod.log:/var/log/mongodb/mongod.log'
       - './init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro'
