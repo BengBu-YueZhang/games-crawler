@@ -62,7 +62,7 @@ const writeData = async (data = []) => {
         const filePath = await existsFile()
         const writeStream = fs.createWriteStream(filePath)
         // jsonp
-        writeStream.write(`handleNewsList(${JSON.stringify(data)})`)
+        writeStream.write(`${JSON.stringify(data)}`)
         writeStream.end()
         writeStream.on('finish', () => {
             console.error('写入已完成')
@@ -76,7 +76,7 @@ const test = async () => {
     try {
         await existsDir()
         const news = await crawler()
-        await saveNewsList(news)
+        // await saveNewsList(news)
         writeData(news)
     } catch (error) {
         console.log(error)
@@ -84,7 +84,7 @@ const test = async () => {
 }
 
 
-mongoConnect()
+// mongoConnect()
 
 setTimeout(() => {
     test()

@@ -4,7 +4,7 @@ const getGameSpotNews = async (page) => {
     try {
         console.log(`gamespot 开始`)
         await page.goto('https://www.gamespot.com/', {
-            timeout: 180000
+            timeout: 50000
         })
         const popular = await page.$(`#river > dl > dd > div > a.pod-header__filters-item.js-filter-option`)
         await popular.click()

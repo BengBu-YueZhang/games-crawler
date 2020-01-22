@@ -3,9 +3,7 @@ const puppeteer = require('puppeteer')
 const getGamerskyNews = async (page) => {
     try {
         console.log(`游民星空 开始`)
-        await page.goto('https://www.gamersky.com/', {
-            timeout: 180000
-        })
+        await page.goto('https://www.gamersky.com/')
         const nav = await page.$(`.Mid1Mnav a`)
         const { x, y, width, height } = await nav.boundingBox()
         await page.mouse.move(x + width / 2, y + height / 2)
