@@ -51,6 +51,9 @@ const crawler = async () => {
             crawlerGameSpot(),
             crawlerIGN()
         ])
+        console.log('a', a)
+        console.log('b', b)
+        console.log('c', c)
         return [...a, ...b, ...c] 
     } catch (error) {
         console.log(error)
@@ -62,7 +65,7 @@ const writeData = async (data = []) => {
         const filePath = await existsFile()
         const writeStream = fs.createWriteStream(filePath)
         // jsonp
-        writeStream.write(`handleNewsList(${JSON.stringify(data)})`)
+        writeStream.write(`${JSON.stringify(data)}`)
         writeStream.end()
         writeStream.on('finish', () => {
             console.error('写入已完成')

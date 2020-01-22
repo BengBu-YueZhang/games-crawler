@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer')
 
 const getGameSpotNews = async (page) => {
     try {
+        console.log(`gamespot 开始`)
         await page.goto('https://www.gamespot.com/', {
             timeout: 45000
         })
@@ -13,6 +14,7 @@ const getGameSpotNews = async (page) => {
         const ts = await page.$$eval(`#river > div > section a div h3`, els => {
             return [...els].map(el => el.innerText)
         })
+        console.log(`gamespot 完成`)
         return as.map((h, i) => ({ src: h, title: ts[i], source: 'GameSpot' }))
     } catch (error) {
         return []

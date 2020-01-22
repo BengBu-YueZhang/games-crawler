@@ -2,10 +2,12 @@ const puppeteer = require('puppeteer')
 
 const getGamerskyNews = async (page) => {
     try {
+        console.log(`游民星空 开始`)
         await page.goto('https://www.gamersky.com/')
         const nav = await page.$(`.Mid1Mnav a`)
         const { x, y, width, height } = await nav.boundingBox()
         await page.mouse.move(x + width / 2, y + height / 2)
+        console.log(`游民星空 完成`)
         return await page.$$eval(`.bgx a`, els => {
             return [...els].map(el => ({ src: el.href, title: el.innerText, source: 'Gamersky' }))
         })
