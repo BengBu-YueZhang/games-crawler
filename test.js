@@ -46,12 +46,10 @@ const existsFile = async () => {
 const crawler = async () => {
     try {
         console.log('开始爬取')
-        const [a, b, c] = await Promise.all([
-            crawlerGamersky(),
-            crawlerGameSpot(),
-            crawlerIGN()
-        ])
-        return [...a, ...b, ...c] 
+        const gamersky = await crawlerGamersky()
+        const gameSpot = await crawlerGameSpot()
+        const ign = await crawlerIGN()
+        return [...gamersky, ...gameSpot, ...ign] 
     } catch (error) {
         console.log(error)
     }
