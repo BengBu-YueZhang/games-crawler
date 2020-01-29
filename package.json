@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "mode=develop node app.js",
-    "prev": "mode=production node app.js",
-    "test": "mode=production node test.js"
+    "start": "pm2 start ecosystem.config.js --only crawler-develop --watch",
+    "prev": "pm2 start ecosystem.config.js --only crawler-production --watch",
+    "test": "pm2 start ecosystem.config.js --only crawler-test --watch"
   },
   "repository": {
     "type": "git",

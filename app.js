@@ -7,7 +7,7 @@ const crawlerGamersky = require('./gamersky')
 // const crawlerGameSpot = require('./gamespot')
 const crawlerIGN = require('./ign')
 const crawlerGcores = require('./gcores')
-const { mongoConnect } = require('./config/mongo')
+// const { mongoConnect } = require('./config/mongo')
 
 const mode = process.env.mode
 let dataDirPath = mode === 'develop' ? path.resolve(__dirname, './data') : '/var/www/crawlerData'
@@ -80,7 +80,9 @@ schedule.scheduleJob('50 * * * *', async () => {
     try {
         await existsDir()
         const news = await crawler()
-        await saveNewsList(news)
+        // Docker中爬虫有超时的问题，暂时不清楚如何解决
+        // 暂时不使用Docker 和 docker-compose
+        // await saveNewsList(news)
         writeData(news)
     } catch (error) {
         console.log(error)
@@ -88,4 +90,4 @@ schedule.scheduleJob('50 * * * *', async () => {
 })
 
 
-mongoConnect()
+// mongoConnect()
