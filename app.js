@@ -4,8 +4,9 @@ const schedule = require('node-schedule')
 const { promisify } = require('util')
 const NewsListModel = require('./model')
 const crawlerGamersky = require('./gamersky')
-const crawlerGameSpot = require('./gamespot')
+// const crawlerGameSpot = require('./gamespot')
 const crawlerIGN = require('./ign')
+const crawlerGcores = require('./gcores')
 const { mongoConnect } = require('./config/mongo')
 
 const mode = process.env.mode
@@ -47,9 +48,13 @@ const crawler = async () => {
     try {
         console.log('开始爬取')
         const gamersky = await crawlerGamersky()
-        const gameSpot = await crawlerGameSpot()
+        // GameSpot一直访问超时，偶尔成功，大部分情况下失败
+        // 可能和国内的网络的情况有关？
+        // const gameSpot = await crawlerGameSpot()
         const ign = await crawlerIGN()
-        return [...gamersky, ...gameSpot, ...ign] 
+        // return [...gamersky, ...gameSpot, ...ign] 
+        const gcores = await crawlerGcores()
+        return [...gamersky, ...ign, ...gcores]
     } catch (error) {
         console.log(error)
     }

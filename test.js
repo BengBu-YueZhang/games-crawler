@@ -4,8 +4,9 @@ const schedule = require('node-schedule')
 const { promisify } = require('util')
 const NewsListModel = require('./model')
 const crawlerGamersky = require('./gamersky')
-const crawlerGameSpot = require('./gamespot')
+// const crawlerGameSpot = require('./gamespot')
 const crawlerIGN = require('./ign')
+const crawlerGcores = require('./gcores')
 const { mongoConnect } = require('./config/mongo')
 
 const mode = process.env.mode
@@ -47,9 +48,11 @@ const crawler = async () => {
     try {
         console.log('开始爬取')
         const gamersky = await crawlerGamersky()
-        const gameSpot = await crawlerGameSpot()
+        // const gameSpot = await crawlerGameSpot()
+        const gcores = await crawlerGcores()
         const ign = await crawlerIGN()
-        return [...gamersky, ...gameSpot, ...ign] 
+        // return [...gamersky, ...gameSpot, ...ign]
+        return [...gamersky, ...ign, ...gcores]
     } catch (error) {
         console.log(error)
     }
@@ -74,6 +77,7 @@ const test = async () => {
     try {
         await existsDir()
         const news = await crawler()
+        console.log(news)
         // await saveNewsList(news)
         writeData(news)
     } catch (error) {
